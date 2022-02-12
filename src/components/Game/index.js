@@ -13,6 +13,8 @@ function Game() {
       <h3 data-testid="status" className="status">
         {gameStatus === GAME_STATUS.GAME_OVER
           ? `Game Over: The winner is ${selectedPlayer} 💪`
+          : gameStatus === GAME_STATUS.NO_MORE_MOVE
+          ? `Game Over: no more move`
           : ""}
       </h3>
       <Board />

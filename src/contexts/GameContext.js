@@ -10,12 +10,7 @@ export function useGameContext() {
   return useContext(GameContext);
 }
 
-//Two Players X and O
-export const PLAYER = {
-  X: "X",
-  O: "O",
-};
-
+//The winning combinations
 const WINNING_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -27,8 +22,15 @@ const WINNING_COMBINATIONS = [
   [2, 4, 6],
 ];
 
+//Two Players X and O
+export const PLAYER = {
+  X: "X",
+  O: "O",
+};
+
 //Game Status
 export const GAME_STATUS = {
+  NO_MORE_MOVE: "NO_MORE_MOVE",
   GAME_OVER: "GAME_OVER",
 };
 
@@ -38,8 +40,12 @@ export function GameContextProvider({ children }) {
   const [selectedPlayer, setSelectedPlayer] = useState(PLAYER.X);
   const [gameStatus, setGameStatus] = useState();
 
+  // The grid is rendering each time the status of the game changing
   React.useEffect(() => {
-    grid && gameStatus !== GAME_STATUS.GAME_OVER && checkGameStatus();
+    grid &&
+      gameStatus !== GAME_STATUS.GAME_OVER &&
+      gameStatus !== GAME_STATUS.NO_MORE_MOVE &&
+      checkGameStatus();
   }, [grid]);
 
   // Initializing the Game once after the mounting
@@ -60,8 +66,10 @@ export function GameContextProvider({ children }) {
     });
     setGrid(gridMap);
     setSelectedPlayer(PLAYER.X);
+    setGameStatus();
   };
 
+  //Switching Player
   const switchPlayer = () => {
     const canSwitchPlayer = !![...grid.values()].find((square) => square.owner);
     if (canSwitchPlayer) {
@@ -69,6 +77,7 @@ export function GameContextProvider({ children }) {
     }
   };
 
+  //Checking if the winningCombinations has the same owner
   const checkWinner = () => {
     for (const winningCombination of WINNING_COMBINATIONS) {
       let hasSameOwner = true;
@@ -93,8 +102,18 @@ export function GameContextProvider({ children }) {
     return false;
   };
 
+  //Checking if there is a square not selected by Players
+  const hasMoreMove = () => {
+    const moreMove = [...grid.values()].find((square) => !square.owner);
+    if (!moreMove) {
+      setGameStatus(GAME_STATUS.NO_MORE_MOVE);
+    }
+    return moreMove;
+  };
+
+  //Checking the game status
   const checkGameStatus = () => {
-    !checkWinner() && switchPlayer();
+    !checkWinner() && hasMoreMove() && switchPlayer();
   };
 
   const value = {
@@ -102,6 +121,7 @@ export function GameContextProvider({ children }) {
     setGrid,
     selectedPlayer,
     gameStatus,
+    initialiseGame,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
