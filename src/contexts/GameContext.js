@@ -16,13 +16,30 @@ export const PLAYER = {
   O: "O",
 };
 
+const WINNING_COMBINATIONS = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
+//Game Status
+export const GAME_STATUS = {
+  GAME_OVER: "GAME_OVER",
+};
+
 //GameContext Provider
 export function GameContextProvider({ children }) {
   const [grid, setGrid] = useState();
   const [selectedPlayer, setSelectedPlayer] = useState(PLAYER.X);
+  const [gameStatus, setGameStatus] = useState();
 
   React.useEffect(() => {
-    grid && switchPlayer();
+    grid && gameStatus !== GAME_STATUS.GAME_OVER && checkGameStatus();
   }, [grid]);
 
   // Initializing the Game once after the mounting
@@ -52,10 +69,39 @@ export function GameContextProvider({ children }) {
     }
   };
 
+  const checkWinner = () => {
+    for (const winningCombination of WINNING_COMBINATIONS) {
+      let hasSameOwner = true;
+      for (const position of winningCombination) {
+        hasSameOwner =
+          hasSameOwner && grid?.get(position)?.owner === selectedPlayer;
+      }
+      if (hasSameOwner) {
+        const gridMap = new Map(grid);
+        winningCombination.forEach((position) => {
+          gridMap?.set(position, {
+            position,
+            owner: selectedPlayer,
+            hasWinningPosition: true,
+          });
+        });
+        setGameStatus(GAME_STATUS.GAME_OVER);
+        setGrid(gridMap);
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const checkGameStatus = () => {
+    !checkWinner() && switchPlayer();
+  };
+
   const value = {
     grid,
     setGrid,
     selectedPlayer,
+    gameStatus,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

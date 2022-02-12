@@ -1,9 +1,9 @@
-import { shape, number, bool, string } from "prop-types";
+import { shape, number, string } from "prop-types";
 
 import { useGameContext } from "../../contexts/GameContext";
 
 const Square = ({ square: { owner, position } }) => {
-  const { grid, selectedPlayer, setGrid } = useGameContext();
+  const { grid, setGrid, selectedPlayer, gameStatus } = useGameContext();
 
   //Set in the grid a new value : the owner of the selected square
   const handleSelect = () => {
@@ -15,7 +15,12 @@ const Square = ({ square: { owner, position } }) => {
   };
 
   return (
-    <button data-testid="square" className="square" onClick={handleSelect}>
+    <button
+      data-testid="square"
+      className="square"
+      onClick={handleSelect}
+      disabled={gameStatus}
+    >
       {owner}
     </button>
   );
@@ -25,7 +30,6 @@ Square.propTypes = {
   square: shape({
     position: number.isRequired,
     owner: string,
-    hasWinningPosition: bool,
   }).isRequired,
 };
 
