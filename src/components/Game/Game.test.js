@@ -22,3 +22,20 @@ describe("Game", () => {
     expect(squares[0].textContent).toBe("X");
   });
 });
+
+test("Switch players", () => {
+  render(<Game />);
+  const squares = screen.queryAllByTestId("square");
+  fireEvent.click(squares[0]);
+  fireEvent.click(squares[1]);
+  expect(squares[0].textContent).toBe("X");
+  expect(squares[1].textContent).toBe("O");
+});
+
+test("should be immutable if played, cannot play on a played position", () => {
+  render(<Game />);
+  const squares = screen.queryAllByTestId("square");
+  fireEvent.click(squares[0]);
+  fireEvent.click(squares[0]);
+  expect(squares[0].textContent).toBe("X");
+});
