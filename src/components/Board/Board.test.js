@@ -1,7 +1,7 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-
+import { screen } from "@testing-library/react";
 import Board from ".";
+import { render } from "../../utils/test-utils";
 
 describe("Board", () => {
   test("should render a Board", () => {
