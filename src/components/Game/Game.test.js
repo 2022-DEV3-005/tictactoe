@@ -21,6 +21,7 @@ describe("Game", () => {
     fireEvent.click(squares[0]);
     expect(squares[0].textContent).toBe("X");
   });
+  
   test("Switch players", () => {
     render(<Game />);
     const squares = screen.queryAllByTestId("square");
@@ -186,5 +187,20 @@ describe("Game", () => {
     );
     const retryBtn = screen.getByTestId(/^retry-btn/);
     expect(retryBtn).toBeInTheDocument();
+  });
+
+  test("All nine squares are filled, the game is a draw", async () => {
+    render(<Game />);
+    const squares = screen.queryAllByTestId("square");
+    [8, 5, 2, 1, 0, 4, 3, 6, 7].forEach((x) => fireEvent.click(squares[x]));
+    expect(screen.getByTestId("status").textContent).toBe(
+      "Game Over: no more move"
+    );
+    const retryBtn = screen.getByTestId(/^retry-btn/);
+    fireEvent.click(retryBtn);
+    expect(squares.length).toBe(9);
+    for (let i = 0; i < 9; i++) {
+      expect(squares[i].textContent).toBe("");
+    }
   });
 });
