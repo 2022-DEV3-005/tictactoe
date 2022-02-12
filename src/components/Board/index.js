@@ -4,7 +4,7 @@ import Square from "../Square";
 import { useGameContext } from "../../contexts/GameContext";
 
 const Board = () => {
-  const { grid } = useGameContext();
+  const { grid, gameStatus } = useGameContext();
 
   const renderGrid = () => {
     return [...grid.entries()].map(([squareIndex, square]) => (
@@ -14,6 +14,11 @@ const Board = () => {
   return (
     <div data-testid="board-container" id="board-container">
       {grid && renderGrid()}
+      {gameStatus && (
+        <button data-testid="retry-btn" className="retry-button">
+          Retry
+        </button>
+      )}
     </div>
   );
 };
