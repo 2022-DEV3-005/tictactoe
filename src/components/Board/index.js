@@ -1,9 +1,10 @@
 import React from "react";
-import { useGameContext } from "../../contexts/GameContext";
+
 import Square from "../Square";
+import { useGameContext } from "../../contexts/GameContext";
 
 const Board = () => {
-  const { grid} = useGameContext();
+  const { grid } = useGameContext();
 
   const renderGrid = () => {
     return [...grid.entries()].map(([squareIndex, square]) => (
