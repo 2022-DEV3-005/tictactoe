@@ -12,7 +12,7 @@ function Game() {
       >{`Selected Player: ${selectedPlayer}`}</h2>
       <h3 data-testid="status" className="status">
         {gameStatus === GAME_STATUS.GAME_OVER
-          ? `Game Over: The winner is ${selectedPlayer}`
+          ? `Game Over: The winner is ${selectedPlayer} 💪`
           : ""}
       </h3>
       <Board />

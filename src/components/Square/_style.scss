@@ -1,28 +1,27 @@
 .square {
-    color: $primary-color;
-    background: $white;
-    border: $border;
-    font-size: 48px;
-    font-weight: bold;
-    line-height: 34px;
-    width: 70px;
-    height: 70px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    &:hover {
-      cursor: pointer;
-      outline: $winning-color;
-      background: $secondary-color;
-    }
-  
-    &:focus {
-      outline: none;
-    }
-  
-    &.winner {
-      color: $winning-color;
-    }
+  color: $primary-color;
+  background: $white;
+  border: $border;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 34px;
+  width: 70px;
+  height: 70px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  &:hover {
+    cursor: pointer;
+    outline: $winning-color;
+    background: $secondary-color;
   }
-  
+
+  &:focus {
+    outline: none;
+  }
+
+  &.winningPosition {
+    color: $winning-color;
+  }
+}

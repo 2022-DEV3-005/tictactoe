@@ -45,7 +45,7 @@ describe("Game", () => {
     await waitFor(
       () => {
         expect(screen.getByTestId("status").textContent).toBe(
-          "Game Over: The winner is X"
+          "Game Over: The winner is X 💪"
         );
       },
       1000,
@@ -60,7 +60,7 @@ describe("Game", () => {
     await waitFor(
       () => {
         expect(screen.getByTestId("status").textContent).toBe(
-          "Game Over: The winner is O"
+          "Game Over: The winner is O 💪"
         );
       },
       1000,
