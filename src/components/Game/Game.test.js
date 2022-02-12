@@ -1,7 +1,7 @@
 import { screen, fireEvent, waitFor } from "@testing-library/react";
 
-import { render } from "../../utils/test-utils";
 import Game from ".";
+import { render } from "../../utils/test-utils";
 
 describe("Game", () => {
   test("Should render Game view with title", () => {
@@ -21,7 +21,7 @@ describe("Game", () => {
     fireEvent.click(squares[0]);
     expect(squares[0].textContent).toBe("X");
   });
-  
+
   test("Switch players", () => {
     render(<Game />);
     const squares = screen.queryAllByTestId("square");
