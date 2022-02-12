@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
-import App from './App';
-import "./index.scss"
+import Game from './components/Game';
+import "./styles/index.scss"
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Game />
   </React.StrictMode>,
   document.getElementById('root')
 );
